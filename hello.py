@@ -29,7 +29,7 @@ if args.data is not None:
 
 # print GPUs, params and random tensors
 print('-' * 50)
-print(f'GPUS: There are {torch.cuda.device_count()} GPUs on this machine')
+print(f'GPUS: There are {torch.cuda.device_count() if torch.cuda.is_available() else 0} GPUs on this machine')
 print('-' * 50)
 print(f'PARAMS: I want to eat: {args.number} {args.food_item}')
 print('-' * 50)
