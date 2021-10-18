@@ -12,7 +12,7 @@ parser.add_argument('--data', default=None, type=str)
 args = parser.parse_args()
 
 # fake tensorboard logs (fake loss)
-writer = SummaryWriter()
+writer = SummaryWriter(log_dir="lightning_logs/hello")
 offset = np.random.uniform(0, 5, 1)[0]
 for x in range(1, 10000):
     y = -np.log(x) + offset + (np.sin(x) * 0.1)
