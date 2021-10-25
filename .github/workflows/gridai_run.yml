@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - uses: gridai-actions/gridai_login@v0
+      - uses: gridai-actions/gridai-login@v0
         with:
           gridai_username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai_key: ${{ secrets.GRIDAI_KEY }}
