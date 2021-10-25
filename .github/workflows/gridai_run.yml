@@ -1,4 +1,4 @@
-name: "gridai-run"
+name: "gridai hello"
 
 on:
   # push:
@@ -9,10 +9,25 @@ on:
     - cron: 33 0,8,16 * * *
 
 jobs:
-  run:
-    uses: robert-s-lee/actions/.github/workflows/gridai_run.yml@main
-    with:
-      script_name: hello.py
-    secrets:
-      username: ${{ secrets.GRIDAI_USERNAME }} 
-      key: ${{ secrets.GRIDAI_KEY }}
+  gridai-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: robert-s-lee/gridai_action_login@v0
+        with:
+          gridai_username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai_key: ${{ secrets.GRIDAI_KEY }}
+      - uses: actions/checkout@v2
+      - run: |
+          grid run --localdir --instance_type t2.medium --dependency_file requirements.txt hello.py | tee grid.run.log 
+          export run_name=$(cat grid.run.log | awk -F: 's1=/grid_name/ {print $2}' | tr -s '[:blank:]')
+          echo "run_name=${run_name}" >> $GITHUB_ENV 
+      - id: grid_status
+        uses: robert-s-lee/gridai_action_status@v0
+        with:
+          obj_type: run
+          obj_id: ${run_name}
+      - run: |
+          if [ "${{ steps.grid_status.outputs.obj_status }}" != "succeeded" ]; then
+            exit 1
+          fi   
