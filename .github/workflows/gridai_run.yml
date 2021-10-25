@@ -21,13 +21,14 @@ jobs:
       - run: |
           export run_name=r$(date +'%y%m%d-%H%M%S')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
-          grid run --localdir --instance_type t2.medium --dependency_file requirements.txt --name ${run_name} hello.py
+          run_name=$(grid run --localdir --instance_type t2.medium --dependency_file requirements.txt --name ${run_name} hello.py | tee grid.run.log | awk -F: 's1=/grid_name/ {print $2}' test.txt | tr -s '[:blank:]' )
+          cat grid.run.log
       - id: grid_status
         uses: robert-s-lee/gridai_action_status@main
         with:
           obj_type: run
           obj_id: ${run_name}
       - run: |
-          if [ "${{ steps.grid_status.outputs.obj_status }}" != "running" ]; then
+          if [ "${{ steps.grid_status.outputs.obj_status }}" != "succeeded" ]; then
             exit 1
           fi   
