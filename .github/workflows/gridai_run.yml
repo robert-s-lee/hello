@@ -21,7 +21,7 @@ jobs:
       - run: |
           export run_name=r$(date +'%y%m%d-%H%M%S')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
-          grid run "--localdir --instance_type t2.medium --dependency_file requirements.txt" --name ${run_name} hello.py
+          grid run --localdir --instance_type t2.medium --dependency_file requirements.txt --name ${run_name} hello.py
       - id: grid_status
         uses: robert-s-lee/gridai_action_status@main
         with:
