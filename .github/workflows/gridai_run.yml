@@ -19,9 +19,9 @@ jobs:
           gridai_key: ${{ secrets.GRIDAI_KEY }}
       - uses: actions/checkout@v2
       - run: |
-          export run_name=c$(date +'%y%m%d-%H%M%S')
+          export run_name=r$(date +'%y%m%d-%H%M%S')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
-          grid run --dependency_file requirements.txt --name ${run_name} hello.py
+          grid run "--localdir --instance_type t2.medium --dependency_file requirements.txt" --name ${run_name} hello.py
       - id: grid_status
         uses: robert-s-lee/gridai_action_status@main
         with:
