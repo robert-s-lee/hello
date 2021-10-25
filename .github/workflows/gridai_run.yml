@@ -14,9 +14,9 @@ jobs:
     timeout-minutes: 120
     steps:
       - uses: robert-s-lee/gridai_action_login@main
-        secrets:
-          username: ${{ secrets.GRIDAI_USERNAME }} 
-          key: ${{ secrets.GRIDAI_KEY }}
+        with:
+          gridai_username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai_key: ${{ secrets.GRIDAI_KEY }}
       - run: |
           export run_name=hello-$(date +'%y%m%d-%H%M%S')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
