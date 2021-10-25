@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           # export run_name=r$(date +'%y%m%d-%H%M%S')
-          run_name=$(grid run --localdir --instance_type t2.medium --dependency_file requirements.txt --name ${run_name} hello.py | tee grid.run.log | awk -F: 's1=/grid_name/ {print $2}' test.txt | tr -s '[:blank:]' )
+          run_name=$(grid run --localdir --instance_type t2.medium --dependency_file requirements.txt hello.py | tee grid.run.log | awk -F: 's1=/grid_name/ {print $2}' test.txt | tr -s '[:blank:]' )
           echo "run_name=${run_name}" >> $GITHUB_ENV 
           cat grid.run.log
       - id: grid_status
