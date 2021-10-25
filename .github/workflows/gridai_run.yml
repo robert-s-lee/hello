@@ -9,10 +9,24 @@ on:
     - cron: 33 0,8,16 * * *
 
 jobs:
-  run:
-    uses: robert-s-lee/actions/.github/workflows/gridai_run.yml@main
-    with:
-      script_name: hello.py
-    secrets:
-      username: ${{ secrets.GRIDAI_USERNAME }} 
-      key: ${{ secrets.GRIDAI_KEY }}
+  gridai-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: robert-s-lee/gridai_action_login@main
+        secrets:
+          username: ${{ secrets.GRIDAI_USERNAME }} 
+          key: ${{ secrets.GRIDAI_KEY }}
+      - run: |
+          export run_name=hello-$(date +'%y%m%d-%H%M%S')
+          echo "run_name=${run_name}" >> $GITHUB_ENV 
+          grid run --dependency_file requirements.txt --name ${run_name} hello.py
+      - id: grid_status
+        uses: robert-s-lee/gridai_action_status@main
+        with:
+          obj_type: run
+          obj_id: ${run_name}
+      - run: |
+          if [ "${{ steps.grid_status.outputs.obj_status }}" != "running" ]; then
+            exit 1
+          fi   
