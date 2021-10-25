@@ -17,6 +17,7 @@ jobs:
         with:
           gridai_username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai_key: ${{ secrets.GRIDAI_KEY }}
+      - uses: actions/checkout@v2
       - run: |
           export run_name=hello-$(date +'%y%m%d-%H%M%S')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
