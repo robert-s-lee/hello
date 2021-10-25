@@ -1,4 +1,4 @@
-name: "gridai-run"
+name: "gridai hello"
 
 on:
   # push:
