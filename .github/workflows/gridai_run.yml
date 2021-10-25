@@ -22,6 +22,7 @@ jobs:
           grid run --localdir --instance_type t2.medium --dependency_file requirements.txt hello.py | tee grid.run.log 
           run_name=$(awk -F: 's1=/grid_name/ {print $2}' | tr -s '[:blank:]' )
           echo "run_name=${run_name}" >> $GITHUB_ENV 
+          echo ${run_name}
       - id: grid_status
         uses: robert-s-lee/gridai_action_status@v0
         with:
