@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
+      - uses: actions/checkout@v2
       - uses: gridai-actions/gridai-login@v0
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
-      - uses: actions/checkout@v2
       - run: |
           grid run --localdir --instance_type t2.medium --dependency_file requirements.txt hello.py | tee grid.run.log 
           export run_name=$(cat grid.run.log | awk -F: '$1=/grid_name/ {print $2}' | tr -s '[:blank:]')
