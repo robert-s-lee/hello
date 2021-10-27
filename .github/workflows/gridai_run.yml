@@ -23,7 +23,7 @@ jobs:
           export run_name=$(cat grid.run.log | awk -F: '$1=/grid_name/ {print $2}' | tr -s '[:blank:]')
           echo "run_name=${run_name}" >> $GITHUB_ENV 
       - id: grid-status
-        uses: gridai-actions/gridai-status@main
+        uses: gridai-actions/gridai-status@v0
         with:
           obj-type: run
           obj-id: ${run_name}
