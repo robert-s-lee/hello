@@ -40,3 +40,8 @@ print('torch:', torch.rand(1), 'numpy', np.random.rand(1))
 f = open("weights.pt", "a")
 f.write("fake weights")
 f.close()
+
+# write some artifacts
+f = open("weights.log", "a")
+f.write("fake weights")
+f.close()
