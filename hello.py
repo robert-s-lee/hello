@@ -6,10 +6,13 @@ from torch.utils.tensorboard import SummaryWriter
 
 # add arguments 
 parser = ArgumentParser()
+parser.add_argument('--test', default=True, type=bool)
 parser.add_argument('--number', default=0, type=int)
 parser.add_argument('--food_item', default='burgers', type=str)
 parser.add_argument('--data', default=None, type=str)
 args = parser.parse_args()
+
+print(args.test)
 
 # fake tensorboard logs (fake loss)
 writer = SummaryWriter(log_dir="lightning_logs/hello")

@@ -2,3 +2,4 @@ grid*json
 grid_artifacts
 weights.pt
 lightning_logs/*
+*.log
